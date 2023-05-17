@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCa, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
@@ -6,6 +6,23 @@ import "./App.css";
 function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [formData, setFormData] = useState({
+    title: "",
+    openingText: "",
+    releaseDate: new Date(),
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  const handleSubmit = () => {
+    console.log(formData);
+  };
 
   const fetchMovies = async () => {
     setIsLoading(true);
@@ -31,6 +48,21 @@ function App() {
 
   return (
     <React.Fragment>
+      <header>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="title">Title</label>
+          <input
+            id="title"
+            type="text"
+            placeholder="title"
+            onChange={handleChange}
+          />
+          <textarea id="openingText" onChange={handleChange} />
+          <label htmlFor="releaseDate">Release Date</label>
+          <input type="date" id="releaseDate" onChange={handleChange} />
+          <button>Add Movie</button>
+        </form>
+      </header>
       <section>
         <button>Fetch Movies</button>
       </section>
