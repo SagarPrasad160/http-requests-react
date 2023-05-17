@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCa, useCallback } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
@@ -23,10 +23,16 @@ function App() {
     setIsLoading(false);
   };
 
+  const stableFetchMovies = useCallback(fetchMovies, []);
+
+  useEffect(() => {
+    stableFetchMovies();
+  }, [stableFetchMovies]);
+
   return (
     <React.Fragment>
       <section>
-        <button onClick={fetchMovies}>Fetch Movies</button>
+        <button>Fetch Movies</button>
       </section>
       <section>
         {isLoading ? <div>Loading...</div> : <MoviesList movies={movies} />}
